@@ -1,0 +1,56 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches
+.cache/
+*.log
+
+# Environment variables & API keys
+.env
+.env.*
+
+# Flask-related
+instance/
+*.db
+*.sqlite3
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+pip-log.txt
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDEs/editors
+.vscode/
+.idea/
+*.swp
+
+# Node-related (if any Tailwind is built using npm)
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Build output (if you're compiling Tailwind manually)
+dist/
+build/
+public/
+
+# Generated HTML (if Tailwind CLI builds HTML directly)
+*.html
+
+# Coverage reports
+htmlcov/
+coverage.xml
+*.cover
+
+# Other
+*.bak
+*.tmp
