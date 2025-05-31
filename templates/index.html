@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Cover Letter Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to right bottom, #e0f2fe, #bfdbfe);
+            /* Soft blue gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 4rem 1.5rem;
+            /* Increased padding */
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 3.5rem;
+            /* More padding */
+            border-radius: 2rem;
+            /* Even more rounded corners */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            /* Deeper shadow */
+            width: 100%;
+            max-width: 960px;
+            /* Wider container */
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            /* Increased gap between major sections */
+            border: 1px solid #e2e8f0;
+            /* Subtle border */
+        }
+
+        h1 {
+            color: #1a202c;
+            /* Darker heading */
+            font-weight: 800;
+            /* Extra bold */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+            /* Subtle text shadow */
+        }
+
+        h2 {
+            color: #2d3748;
+            /* Darker subheading */
+            font-weight: 700;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            /* More space below label */
+            font-weight: 600;
+            color: #4a5568;
+            /* Darker label text */
+            font-size: 1.05rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            /* Generous padding */
+            border: 1px solid #cbd5e0;
+            /* Lighter border */
+            border-radius: 1rem;
+            /* Very rounded input fields */
+            font-size: 1.1rem;
+            /* Larger font */
+            color: #2d3748;
+            background-color: #f8fafc;
+            /* Slightly off-white input background */
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4c51bf;
+            /* Deeper blue focus color */
+            box-shadow: 0 0 0 5px rgba(76, 81, 191, 0.3);
+            /* Stronger focus shadow */
+            background-color: #ffffff;
+            /* White on focus */
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            /* Taller text area */
+            resize: vertical;
+        }
+
+        /* Adjusted button styles for reduced width */
+        .generate-button { /* Added a specific class for the generate button */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem 2.2rem;
+            border-radius: 1.25rem;
+            background-image: linear-gradient(to right, #667eea, #764ba2);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.15rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.05em;
+            max-width: 250px;
+            width: 100%;
+        }
+
+        .generate-button:hover {
+            background-image: linear-gradient(to right, #5a67d8, #6b46c1);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .generate-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .loading-indicator {
+            display: none;
+            text-align: center;
+            color: #4c51bf;
+            font-style: italic;
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            animation: pulse 1.5s infinite ease-in-out;
+            /* Pulsing animation */
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.7;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.7;
+            }
+        }
+
+        .cover-letter-output {
+            background-color: #fdfdfe;
+            /* Almost white background */
+            border: 1px solid #e0e7ff;
+            border-radius: 1.5rem;
+            /* More rounded output area */
+            padding: 2.5rem;
+            /* More padding */
+            white-space: pre-wrap;
+            font-size: 1.08rem;
+            line-height: 1.7;
+            /* Improved readability */
+            color: #2d3748;
+            min-height: 250px;
+            /* Taller output area */
+            overflow-y: auto;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
+            /* More noticeable inner shadow */
+            position: relative;
+            /* For copy button positioning */
+        }
+
+        .error-message {
+            display: none;
+            color: #ef4444;
+            font-weight: 700;
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 1.1rem;
+            background-color: #fee2e2;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            border: 1px solid #fca5a5;
+        }
+        .error-message.show {
+            display: block;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background-color: #4c51bf;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            opacity: 0.9; /* Slightly less opaque by default */
+        }
+
+        .copy-button:hover {
+            background-color: #5a67d8;
+            transform: translateY(-1px);
+            opacity: 1; /* Fully opaque on hover */
+        }
+
+        .copy-button:active {
+            transform: translateY(0);
+        }
+
+        /* No longer need .copy-message as a separate div for overlay */
+        /* If you wanted a separate overlay, you'd position it relative to the button or output area */
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2.5rem 1.5rem;
+                border-radius: 1.5rem;
+                gap: 2rem;
+            }
+
+            body {
+                padding: 2rem 0.75rem;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .generate-button { /* Use the new class for responsiveness */
+                padding: 0.9rem 1.5rem;
+                font-size: 1.05rem;
+            }
+
+            .cover-letter-output {
+                padding: 1.5rem;
+                min-height: 180px;
+            }
+
+            .copy-button {
+                top: 0.75rem;
+                right: 0.75rem;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-5xl font-extrabold text-center mb-10">AI Cover Letter Generator</h1>
+
+        <form id="coverLetterForm" class="space-y-8">
+            <div class="form-group">
+                <label for="job_title">Job Title:</label>
+                <input type="text" id="job_title" name="job_title" placeholder="e.g., Data Scientist, Marketing Manager"
+                    required class="rounded-2xl">
+            </div>
+            <div class="form-group">
+                <label for="company">Company Name:</label>
+                <input type="text" id="company" name="company" placeholder="e.g., Innovate Solutions Inc." required
+                    class="rounded-2xl">
+            </div>
+            <div class="form-group">
+                <label for="skills">Your Key Skills (comma-separated):</label>
+                <textarea id="skills" name="skills"
+                    placeholder="e.g., Python, SQL, Machine Learning, Project Management, Communication" required
+                    class="rounded-2xl"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="experience">Relevant Experience Summary:</label>
+                <textarea id="experience" name="experience"
+                    placeholder="e.g., 5 years experience in data analysis, developed predictive models, managed cross-functional teams."
+                    required class="rounded-2xl"></textarea>
+            </div>
+            <button type="submit" class="generate-button rounded-3xl">Generate</button>
+            <div id="loading" class="loading-indicator">Generating your personalized cover letter... Please wait.</div>
+            <div id="errorMessage" class="error-message" role="alert"></div>
+        </form>
+
+        <div class="cover-letter-output">
+            <h2 class="text-3xl font-bold mb-6">Your Generated Cover Letter:</h2>
+            <p id="output"></p>
+            <button id="copyButton" class="copy-button" style="display: none;">Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('coverLetterForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const outputDiv = document.getElementById('output');
+            const loadingIndicator = document.getElementById('loading');
+            const errorMessageDiv = document.getElementById('errorMessage');
+            const copyButton = document.getElementById('copyButton');
+
+            outputDiv.textContent = ''; // Clear previous output
+            errorMessageDiv.textContent = ''; // Clear previous error
+            errorMessageDiv.classList.remove('show'); // Hide error message
+            loadingIndicator.style.display = 'block'; // Show loading indicator
+            copyButton.style.display = 'none'; // Hide copy button initially
+            copyButton.textContent = 'Copy to Clipboard'; // Reset button text
+
+            try {
+                const response = await fetch('/generate_cover_letter', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    outputDiv.textContent = data.cover_letter;
+                    copyButton.style.display = 'block'; // Show copy button if successful
+                } else {
+                    errorMessageDiv.textContent = data.error || 'An unknown error occurred. Please try again.';
+                    errorMessageDiv.classList.add('show'); // Show error message
+                    outputDiv.textContent = ''; // Clear placeholder if error occurs
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessageDiv.textContent = 'Network error or server unreachable. Please check your internet connection.';
+                errorMessageDiv.classList.add('show'); // Show error message
+                outputDiv.textContent = ''; // Clear placeholder if network error
+            } finally {
+                loadingIndicator.style.display = 'none'; // Hide loading indicator
+            }
+        });
+
+        // Copy to clipboard functionality
+        document.getElementById('copyButton').addEventListener('click', function () {
+            const outputText = document.getElementById('output').textContent;
+            const copyButton = document.getElementById('copyButton'); // Re-get button reference
+
+            navigator.clipboard.writeText(outputText).then(() => {
+                const originalText = copyButton.textContent;
+                copyButton.textContent = 'Copied!';
+                copyButton.style.backgroundColor = '#10b981'; // Green color for copied state
+
+                setTimeout(() => {
+                    copyButton.textContent = originalText;
+                    copyButton.style.backgroundColor = ''; // Revert background (or set to original #4c51bf)
+                    copyButton.style.backgroundColor = '#4c51bf'; // Set back to original blue
+                }, 2000); // Display "Copied!" for 2 seconds
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                // Optionally, show an error message on the button or general error area
+                copyButton.textContent = 'Failed to copy!';
+                copyButton.style.backgroundColor = '#ef4444'; // Red for error
+                setTimeout(() => {
+                    copyButton.textContent = 'Copy to Clipboard';
+                    copyButton.style.backgroundColor = '#4c51bf';
+                }, 2000);
+            });
+        });
+
+    </script>
+</body>
+
+</html>

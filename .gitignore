@@ -43,9 +43,6 @@ dist/
 build/
 public/
 
-# Generated HTML (if Tailwind CLI builds HTML directly)
-*.html
-
 # Coverage reports
 htmlcov/
 coverage.xml
