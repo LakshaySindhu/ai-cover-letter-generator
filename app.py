@@ -81,4 +81,7 @@ if __name__ == '__main__':
     # Create a 'templates' directory if it doesn't exist
     if not os.path.exists('templates'):
         os.makedirs('templates')
-    app.run(debug=True) # Set debug=False in production
+    # app.run(debug=True) # Set debug=False in production
+
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
